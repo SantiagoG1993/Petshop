@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href='../assets/styles/santi.css'>
+    <link rel="stylesheet" href='../assets/styles/styleMarco.css'>
+    <link rel="shortcut icon" href="../assets/images/logo-ico.ico" type="image/x-icon">
+    <title>PuppyPet - Farmacia</title>
+</head>
+
+<body class="fondoTiendas">
+    <header class="fondoHeader2">
+        <nav class="navbar navbar-expand-md d-flex justify-content-between"  id="navbar">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="../index.html"><img src="../assets/images/logo-no-bg.png" alt=""></a>
+              <button class="navbar-toggler m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 col-12 text-center ">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="./toys.html">Juguetes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#"><span id="textoResaltado">Farmacia</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="./contact.html">Contacto</a>
+                  </li>
+                </ul>
+              </div>
+              <div role="button" id="carrito">
+                <a href="./cart.html">
+                  <p>CARRITO</p>
+                </a>
+                <i class="bi bi-cart4"></i>
+              </div>
+            </div>
+          </nav>
+          <!-- carrousel -->
+    </header>
+    <main id="app" class="d-flex flex-column align-items-center">
+      <div id="carrito2" >
+        <a href="../pages/cart.html">
+            <p>ACCEDER AL CARRITO</p>
+        </a>
+        <i class="bi bi-cart4"></i>
+    </div>
+      {{filtroSearch}}
+      <div id="barContainer" class="d-flex justify-content-center align-items-center gap-5 mt-3">
+          <p id="searchTxt">Podemos ayudarte a encontrar tu producto!!</p>
+          <form role="search">
+              <input v-model='searchInputFarmacy' id="searchInput"  class="form-control me-2" type="Búsqueda" placeholder="  Escribe para buscar" aria-label="Búsqueda">
+          </form>
+      </div>
+
+      <div id="cardcontainer" class="d-flex justify-content-center gap-3 flex-wrap m-5">
+          <div class="card m-2 p-2 d-flex align-items-center" v-if='filtrados.length != 0' v-for='card of filtrados' style="width: 18rem;">
+              <img :src="card.imagen" class="card-img-top cardImg" :alt="card.producto">
+              <div class="card-body">
+                  <h5 id="cardTitle" class="card-title text-center">{{card.producto}}</h5>
+                  <div id='btns' class="d-flex flex-column gap-1">
+                      <i :class="agregadoCarrito.some(prod=>prod._id==card._id)?'bi bi-cart-dash-fill' : 'bi bi-cart-dash'" role="button" @click="toggleCart(card._id)"></i>
+                      <p class="card-text precio text-center">Precio: $ {{card.precio.toLocaleString()}}</p>
+                      <p class="card-text text-center"> Unidades disponibles: {{card.disponibles}}</p>
+                      <div v-if="card.disponibles <5" id="ultimas_unidades">
+                        <p class="ultimas">Últimas unidades!</p>
+                      </div>
+                      <a :href="`../pages/details.html?_id=${card._id}`" class="btn detalles">Detalles</a>
+                  </div>
+              </div>
+          </div>
+          <div v-if="filtrados.length == 0">
+              <p id="noResultados">No hay resultados!</p>
+          </div>
+      </div>
+  </main>
+    <hr>
+    <footer id="footer_left" class="footerHome">
+
+      <h4>Contáctanos</h4>
+      <a href="tel:+1234567890">
+          <p><i class="bi bi-telephone"></i> Teléfono: +1234567890</p>
+      </a> 
+      <a href="mailto:info@puppypet.com">
+          <p><i class="bi bi-envelope"></i> Correo electrónico: info@puppypet.com</p>
+      </a>
+    
+      <div class="social">
+          <a href="https://www.facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.twitter.com" target="_blank"><i class="bi bi-twitter"></i></a>
+          <a href="https://www.instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
+      </div>
+    
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="../assets/scripts/farmacy.js"></script>
+    <script src="../assets/scripts/index.js"></script>
+</body>
+
+</html>
